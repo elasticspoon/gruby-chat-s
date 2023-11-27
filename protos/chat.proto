@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+service ChatRoom {
+  rpc SaveMessage (ChatMessage) returns (ErrorCode) {}
+}
+
+// The request message containing the user's name.
+message ChatMessage {
+  string name = 1;
+  string chat_message = 2;
+  string timestamp = 3;
+}
+
+message ErrorCode {
+  int32 code = 1;
+}

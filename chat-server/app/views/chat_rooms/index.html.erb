@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Chat rooms</h1>
+<h2><%= @chat_rooms.length %>
+  in use</h2>
+
+<%= turbo_stream_from "chat_rooms" %>
+<div id="chat_rooms">
+  <%= render @chat_rooms %>
+</div>
+
+<%= form_with model: ChatRoom.new do |form| %>
+  <%= form.label :name, "Name for Chat Room:" %>
+  <%= form.text_field :name %>
+  <%= form.submit "Make new room" %>
+<% end %>

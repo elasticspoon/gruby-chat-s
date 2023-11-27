@@ -1,0 +1,13 @@
+<%= @chat_room.name %>
+<div>
+  <%= turbo_stream_from "room:#{@chat_room.id}" %>
+  <div id="messages">
+  </div>
+  <%= render @chat_room.messages %>
+  <%= render "messages/form", message: @message %>
+</div>
+
+<div>
+  <%= link_to "Back to chat rooms", chat_rooms_path %>
+  <%= button_to "Destroy this chat room", @chat_room, method: :delete %>
+</div>
