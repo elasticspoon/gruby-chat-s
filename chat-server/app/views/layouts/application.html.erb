@@ -16,8 +16,10 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <% if current_user %>
-      <%= current_user.id %>
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+      <div class="flex w-full bg-gray-200 items-center justify-between">
+      <span class="p-3 text-lg">Logged in as: <%= current_user.email %></span>
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "bg-blue-400 hover:bg-red-500 p-3 rounded-md m-2 m-l-auto" %>
+      </div>
     <% else %>
       <%= link_to "Log in", new_user_session_path %>
     <% end %>

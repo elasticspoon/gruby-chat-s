@@ -1,8 +1,10 @@
-<%= @chat_room.name %>
+<h1 class="text-3xl font-bold text-center p-3 bg-green-300">Chat Room: <%= @chat_room.name.capitalize %></h1>
 <div>
   <%= turbo_stream_from "room:#{@chat_room.id}" %>
-  <div id="messages">
-    <%= render @chat_room.messages %>
+  <div id="messages" class="flex flex-col">
+    <% @chat_room.messages.each do |message| %>
+      <%= render partial: "messages/message", locals: { user: current_user, message: message } %>
+    <% end %>
   </div>
   <%= render "messages/form", message: @message %>
 </div>

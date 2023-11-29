@@ -1,4 +1,4 @@
-<%= form_with(model: message, remote: true) do |form| %>
+<%= form_with(model: message, remote: true, class: "bg-blue-200 p-3") do |form| %>
 
   <% if message.errors.any? %>
     <div style="color: red">
@@ -13,16 +13,12 @@
     </div>
   <% end %>
 
-  <%# form.hidden_field :user_id, :value => message.id %>
-  <%# form.hidden_field :room_id, :value => message.id %>
   <%= form.hidden_field :user_id, value: message.user_id %>
   <%= form.hidden_field :chat_room_id, value: message.chat_room_id %>
-  <div>
-    <%= form.label :content, style: "display: block" %>
-    <%= form.text_field :content %>
+  <div class="flex w-full gap-x-2">
+    <%= form.label :content,value: "Send a message", class: "sr-only" %>
+    <%= form.text_field :content, class: "rounded-md w-full" %>
+    <%= form.submit "Send", class: "bg-blue-400 hover:bg-green-400 p-2 rounded-md" %>
   </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>
