@@ -571,10 +571,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "0ghs51isb5jmndrdr5mhh74gv8c5spg396fji8rpjycz5nqmv5ri";
+      sha256 = "0541lfqaz46h8s3fks11vsd1iqzmgjjw3c0jp9agg92zblwj0axs";
       type = "gem";
     };
-    version = "0.4.6";
+    version = "0.4.7";
   };
   net-pop = {
     dependencies = ["net-protocol"];
@@ -918,6 +918,17 @@
       type = "gem";
     };
     version = "3.1.0";
+  };
+  tailwindcss-rails = {
+    dependencies = ["railties"];
+    groups = ["default"];
+    platforms = [];
+    source = {
+      remotes = ["https://rubygems.org"];
+      sha256 = "0mp8ncpv41kicnwi3lbd1sl12512w2190w8zbwdj43f1kx10599l";
+      type = "gem";
+    };
+    version = "2.0.32";
   };
   thor = {
     groups = ["default" "development"];
