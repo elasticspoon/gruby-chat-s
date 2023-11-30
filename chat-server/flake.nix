@@ -20,6 +20,11 @@
         (self: super: {
           ruby = pkgs.ruby_3_2;
         })
+        (final: prev: rec {
+          nodejs = prev.nodejs-18_x;
+          pnpm = prev.nodePackages.pnpm;
+          yarn = (prev.yarn.override { inherit nodejs; });
+        })
       ];
       pkgs = import nixpkgs { inherit overlays system; };
 
@@ -40,10 +45,11 @@
         default = run;
 
         run = pkgs.mkShell {
-          buildInputs = with pkgs; [ nodejs rubyEnv rubyEnv.wrappedRuby node2nix];
+          buildInputs = with pkgs; [ tailwindcss node2nix pnpm yarn nodejs bundix ] ++ [rubyEnv.wrappedRuby rubyEnv ];
           # buildInputs = [ rubyEnv rubyEnv.wrappedRuby updateDeps ];
 
           shellHook = ''
+            export TAILWINDCSS_INSTALL_DIR=${pkgs.tailwindcss}/bin
             export NIX_SHELL="true"
             ${rubyEnv}/bin/rails --version
           '';
