@@ -1,15 +1,58 @@
-<h1 class="text-3xl font-bold text-center p-3 bg-green-300">Chat Room: <%= @chat_room.name.capitalize %></h1>
-<div>
-  <%= turbo_stream_from "room:#{@chat_room.id}" %>
-  <div id="messages" class="flex flex-col">
-    <% @chat_room.messages.each do |message| %>
-      <%= render partial: "messages/message", locals: { user: current_user, message: message } %>
-    <% end %>
+<div class="flex flex-col flex-1">
+  <div
+    class="
+      flex
+      bg-purple-300
+      p-3
+      items-center
+      justify-between
+      shadow-gray-300
+      shadow
+    "
+  >
+    <h1 class="text-3xl font-bold text-center ">Chat Room:
+      <%= @chat_room.name.capitalize %></h1>
+    <ul class="flex flex-col gap-y-2">
+      <li>
+        <%= link_to "Back to chat rooms",
+        chat_rooms_path,
+        class: "p-2 rounded-md bg-blue-200 hover:bg-blue-400" %>
+      </li>
+      <li>
+        <%= button_to "Destroy this chat room",
+        @chat_room,
+        method: :delete,
+        class: "p-2 rounded-md bg-blue-200 hover:bg-blue-400 " %>
+      </li>
+    </ul>
   </div>
-  <%= render "messages/form", message: @message %>
+  <div class="flex flex-col flex-1">
+    <%= turbo_stream_from "room:#{@chat_room.id}" %>
+    <div id="messages" class="flex flex-col flex-1 bg-gray-200 overflow-scroll">
+      <% @chat_room.messages.each do |message| %>
+        <%= render partial: "messages/message",
+        locals: {
+          user: current_user,
+          message: message
+        } %>
+      <% end %>
+    </div>
+    <%= render "messages/form", message: @message %>
+  </div>
 </div>
-
-<div>
-  <%= link_to "Back to chat rooms", chat_rooms_path %>
-  <%= button_to "Destroy this chat room", @chat_room, method: :delete %>
-</div>
+<!-- I really hate having the styling here but idk how else to do it -->
+<script>
+  document.addEventListener("DOMContentLoaded", ()=>{
+    let messages = document.getElementById("messages").children
+    messages[messages.length - 1].scrollIntoView()
+  })
+</script>
+<style>
+div.usr-<%= current_user&.id %> {
+  background-color: #90ec90;
+  margin-inline-start: auto;
+}
+#messages {
+  max-height: calc(100dvh - 226px);
+}
+</style>

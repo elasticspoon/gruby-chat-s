@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-screen">
   <head>
     <title>ChatServer</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -12,18 +12,21 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <% if current_user %>
+  <body class="min-h-screen flex flex-col">
+    <p class="notice fixed top-0 left-0"><%= notice %></p>
+    <p class="alert fixed top-0 left-0"><%= alert %></p>
+    <% if user_signed_in? %>
       <div class="flex w-full bg-gray-200 items-center justify-between">
-      <span class="p-3 text-lg">Logged in as: <%= current_user.email %></span>
-      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "bg-blue-400 hover:bg-red-500 p-3 rounded-md m-2 m-l-auto" %>
+        <span class="p-3 text-lg">Logged in as:
+          <%= current_user.email %></span>
+        <%= button_to "Sign out",
+        destroy_user_session_path,
+        method: :delete,
+        class: "bg-blue-400 hover:bg-red-500 p-3 rounded-md m-2 m-l-auto" %>
       </div>
     <% else %>
       <%= link_to "Log in", new_user_session_path %>
     <% end %>
-
     <%= yield %>
   </body>
 </html>

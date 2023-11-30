@@ -1,19 +1,19 @@
-<% if user && user == message.user %>
-<div id="<%= dom_id message %>" class="p-2 flex w-full gap-x-2">
-  <span class="">
-    <%= message.user.email %>
-  </span>
-  <span class="">
-    <%= message.content %>
-  </span>
+<div class="block ">
+  <div
+    id="<%= dom_id message %>"
+    class="
+      usr-<%= message.user_id %>
+      p-2
+      w-fit
+      rounded
+      bg-blue-300
+    "
+  >
+    <span class="">
+      <%= message.user.email %>
+    </span>
+    <span class="">
+      <%= message.content %>
+    </span>
+  </div>
 </div>
-<% else %>
-<div id="<%= dom_id message %>" class="p-2 flex w-full gap-x-2 flex-row-reverse">
-  <span class="">
-    <%= message.content %>
-  </span>
-  <span class="">
-    You
-  </span>
-</div>
-<% end %>
