@@ -1,14 +1,11 @@
-<h1>Chat rooms</h1>
-<h2><%= @chat_rooms.length %>
-  in use</h2>
+<h1 class="bg-sky-200 font-bold text-4xl p-4 block text-center">Chat rooms (<%= @chat_rooms.length %>)</h1>
 
+<%= form_with model: ChatRoom.new, class: "p-4 flex gap-3" do |form| %>
+  <%= form.label :name, "Name for Chat Room:", class: "sr-only" %>
+  <%= form.text_field :name, class: "w-full" %>
+  <%= form.submit "Make new room", class: "rounded bg-green-300 p-4 font-bold text-xl" %>
+<% end %>
 <%= turbo_stream_from "chat_rooms" %>
-<div id="chat_rooms">
+<div id="chat_rooms" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 p-4">
   <%= render @chat_rooms %>
 </div>
-
-<%= form_with model: ChatRoom.new do |form| %>
-  <%= form.label :name, "Name for Chat Room:" %>
-  <%= form.text_field :name %>
-  <%= form.submit "Make new room" %>
-<% end %>

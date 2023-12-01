@@ -13,20 +13,22 @@
   </head>
 
   <body class="min-h-screen flex flex-col">
-    <p class="notice fixed top-0 left-0"><%= notice %></p>
-    <p class="alert fixed top-0 left-0"><%= alert %></p>
-    <% if user_signed_in? %>
-      <div class="flex w-full bg-gray-200 items-center justify-between">
+    <p class="notice bg-green-400 fixed top-0 left-0"><%= notice %></p>
+    <p class="alert fixed bg-red-400 top-0 left-0"><%= alert %></p>
+    <div class="flex w-full bg-gray-200 items-center justify-between">
+      <% if user_signed_in? %>
         <span class="p-3 text-lg">Logged in as:
           <%= current_user.email %></span>
         <%= button_to "Sign out",
         destroy_user_session_path,
         method: :delete,
-        class: "bg-blue-400 hover:bg-red-500 p-3 rounded-md m-2 m-l-auto" %>
-      </div>
-    <% else %>
-      <%= link_to "Log in", new_user_session_path %>
-    <% end %>
+        class: "bg-blue-400 hover:bg-red-500 p-3 rounded-md m-2 ml-auto" %>
+      <% else %>
+        <%= link_to "Log in",
+        new_user_session_path,
+        class: "bg-blue-400 hover:bg-green-500 p-3 rounded-md m-2 ml-auto" %>
+      <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>

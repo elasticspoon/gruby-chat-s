@@ -10,6 +10,7 @@ class ChatRoomsController < ApplicationController
   # GET /chat_rooms/1
   # join the chat room
   def show
+    current_user && current_user.chat_rooms << @chat_room
   end
 
   # POST /chat_rooms

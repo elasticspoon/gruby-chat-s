@@ -1,9 +1,19 @@
-<div id="<%= dom_id chat_room %>">
-  <p>
-    <strong>
-      <%= chat_room.name %>
-    </strong>
-    <%= link_to "Join this chat room", chat_room %>
-  </p>
-
+<div id="<%= dom_id chat_room %>" class="p-4 block border rounded">
+  <%= turbo_stream_from chat_room %>
+  <h3 class="text-center font-bold text-xl">
+    <%= chat_room.name.capitalize %>
+  </h3>
+  <div id="<%= dom_id chat_room %>-users"class="bg-zinc-200 p-4 my-4 rounded">
+    <h3 class="font-bold">
+      Members (<%= chat_room.users.length %>)
+    </h3>
+    <div class="max-h-40 overflow-y-scroll">
+    <% chat_room.users.each do |user| %>
+      <%= render partial: "users/user", locals: { user: user } %>
+    <% end %>
+    </div>
+  </div>
+  <%= link_to "Join this chat room",
+  chat_room,
+  class: "ml-auto block w-fit p-2 bg-blue-300 rounded" %>
 </div>
