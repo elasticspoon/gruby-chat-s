@@ -1,4 +1,8 @@
-<div class="flex flex-col flex-1">
+<div
+  class="flex flex-col flex-1"
+  data-chat-room="<%= @chat_room.id %>"
+  data-controller="chat"
+>
   <div
     class="
       flex
@@ -28,7 +32,11 @@
   </div>
   <div class="flex flex-col flex-1">
     <%= turbo_stream_from "room:#{@chat_room.id}" %>
-    <div id="messages" class="flex flex-col flex-1 bg-gray-200 overflow-scroll">
+    <div
+      id="messages"
+      class="flex flex-col flex-1 bg-gray-200 overflow-scroll"
+      data-chat-target="messages"
+    >
       <% @chat_room.messages.each do |message| %>
         <%= render partial: "messages/message",
         locals: {
@@ -41,19 +49,6 @@
   </div>
 </div>
 <!-- I really hate having the styling here but idk how else to do it -->
-<script>
-  let messages = document.getElementById("messages")
-  let obs = new MutationObserver(scrollToBot)
-  obs.observe(messages, {childList: true})
-
-
-  function scrollToBot() {
-    let nodes = messages.children
-    nodes[nodes.length - 1].scrollIntoView()
-  }
-
-  document.addEventListener("DOMContentLoaded", scrollToBot)
-</script>
 <style>
 div.usr-<%= current_user&.id %> {
   background-color: #90ec90;

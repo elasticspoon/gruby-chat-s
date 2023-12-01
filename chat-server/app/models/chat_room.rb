@@ -6,8 +6,7 @@ class ChatRoom < ApplicationRecord
     broadcast_append_to "chat_rooms"
   end
   after_update_commit do
-    broadcast_update_to "chat_rooms"
-    broadcast_update_to self
+    broadcast_replace_to self
   end
   after_destroy_commit { broadcast_remove_to "chat_rooms" }
 end
