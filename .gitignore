@@ -1,8 +1,6 @@
 chat-server/log
 chat-server/tmp
 chat-server/.direnv
-chat-server/db/*
-!chat-server/db/migrate/
 chat-server/storage
 chat-server/node_modules
 chat-server/app/assets/builds
