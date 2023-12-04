@@ -1,7 +1,7 @@
 <div
   class="flex flex-col flex-1"
-  data-chat-room="<%= @chat_room.id %>"
   data-controller="chat"
+  data-chat-room-id-value="<%= @chat_room.id %>"
 >
   <div
     class="
@@ -34,10 +34,10 @@
     <%= turbo_stream_from "room:#{@chat_room.id}" %>
     <div
       id="messages"
-      class="flex flex-col flex-1 bg-gray-200 overflow-scroll"
+      class="flex flex-col-reverse flex-1 bg-gray-200 overflow-scroll"
       data-chat-target="messages"
     >
-      <% @chat_room.messages.each do |message| %>
+      <% @chat_room.messages.reverse.each do |message| %>
         <%= render partial: "messages/message",
         locals: {
           user: current_user,
