@@ -17,7 +17,11 @@
   <%= form.hidden_field :chat_room_id, value: message.chat_room_id %>
   <div class="flex w-full gap-x-2">
     <%= form.label :content, value: "Send a message", class: "sr-only" %>
-    <%= form.text_field :content, class: "rounded-md w-full" %>
+    <%= form.text_field :content,
+                    class: "rounded-md w-full",
+                    data: {
+                      chat_target: "input"
+                    } %>
     <%= form.submit "Send", class: "bg-blue-400 hover:bg-green-400 p-2 rounded-md" %>
   </div>
 

@@ -2,6 +2,7 @@
   class="flex flex-col flex-1"
   data-controller="chat"
   data-chat-room-id-value="<%= @chat_room.id %>"
+  data-chat-user-id-value="<%= current_user&.id %>"
 >
   <div
     class="
@@ -45,6 +46,9 @@
         } %>
       <% end %>
     </div>
+    <div class="h-7 bg-gray-200 ">
+      <span class="text-md block px-2" data-chat-target="typingUsers">test txt</span>
+    </div>
     <%= render "messages/form", message: @message %>
   </div>
 </div>
@@ -55,6 +59,6 @@ div.usr-<%= current_user&.id %> {
   margin-inline-start: auto;
 }
 #messages {
-  max-height: calc(100dvh - 226px);
+  max-height: calc(100dvh - 254px);
 }
 </style>
