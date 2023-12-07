@@ -1,6 +1,8 @@
 syntax = "proto3";
 
-service ChatRoom {
+package rpc;
+
+service Chat {
   rpc SaveMessage (ChatMessage) returns (ErrorCode) {}
 }
 
