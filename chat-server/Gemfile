@@ -43,6 +43,7 @@ gem "devise"
 # GRPC
 gem "grpc"
 gem "google-protobuf", "~> 3.24.4"
+gem "gruf"
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
