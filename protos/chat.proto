@@ -6,9 +6,12 @@ service ChatRoom {
 
 // The request message containing the user's name.
 message ChatMessage {
-  string name = 1;
-  string chat_message = 2;
-  string timestamp = 3;
+  int32 id = 1;
+  int32 user_id = 2;
+  int32 chat_room_id = 3;
+  string chat_message = 4;
+  string created_at = 5;
+  string updated_at = 6;
 }
 
 message ErrorCode {
