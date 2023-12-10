@@ -7,4 +7,19 @@ class User < ApplicationRecord
   has_many :chat_room_users, dependent: :destroy
   has_many :chat_rooms, through: :chat_room_users
   has_many :messages, dependent: :destroy
+
+  def stream_location(room_id)
+    client = Gruf::Client.new(service: ::Rpc::Chat, options: {password: "austin"})
+
+    Thread.new do
+      rsp = client.call(:GetLocation, user_id: id)
+
+      rsp.message.each do |msg|
+        ActionCable.server.broadcast("chat_room_#{room_id}", {
+          user: email,
+          location: msg.distance
+        })
+      end
+    end
+  end
 end

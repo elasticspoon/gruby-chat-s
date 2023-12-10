@@ -16,6 +16,7 @@ module Rpc
 
       rpc :SaveMessage, ::Rpc::ChatMessage, ::Rpc::MessageResponse
       rpc :SendMessage, ::Rpc::ChatMessage, ::Rpc::MessageResponse
+      rpc :GetLocation, ::Rpc::LocationRequest, stream(::Rpc::LocationResponse)
     end
 
     Stub = Service.rpc_stub_class

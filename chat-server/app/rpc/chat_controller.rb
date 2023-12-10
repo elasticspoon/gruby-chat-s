@@ -24,4 +24,24 @@ class ChatController < Gruf::Controllers::Base
     set_debug_info(e.message, e.backtrace[0..4])
     fail!(:internal, :internal, "ERROR: #{e.message}")
   end
+
+  def get_location
+    User.find(request.message.user_id)
+
+    return enum_for(:get_location) unless block_given?
+
+    rand(100).downto(0) do |i|
+      sleep 1
+      response = Rpc::LocationResponse.new(
+        timestamp: Time.now.to_i,
+        distance: i
+      )
+      yield response
+    end
+  rescue ActiveRecord::RecordNotFound => _
+    fail!(:not_found, :not_found, "User not found")
+  rescue => e
+    set_debug_info(e.message, e.backtrace[0..4])
+    fail!(:internal, :internal, "ERROR: #{e.message}")
+  end
 end

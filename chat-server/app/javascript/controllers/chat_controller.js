@@ -3,12 +3,13 @@ import consumer from "channels/consumer";
 
 // Connects to data-controller="chat"
 export default class extends Controller {
-  static targets = ["messages", "input", "typingUsers"];
+  static targets = ["location", "messages", "input", "typingUsers"];
   static values = { roomId: Number, userId: Number };
 
   initialize() {
     this.channel;
     this.typingUsers = new Set();
+    this.userLocations = new Map();
     this.timeoutId;
   }
 
@@ -27,9 +28,12 @@ export default class extends Controller {
       } else {
         this.typingUsers.delete(e.detail.user);
       }
-      console.log(e, this.typingUsers);
       this.updateTypingUsers();
     });
+    document.addEventListener(
+      "user_location",
+      this.updateUserLocation.bind(this),
+    );
   }
 
   joinRoom() {
@@ -46,6 +50,15 @@ export default class extends Controller {
               detail: {
                 user: data.user,
                 user_is_typing: data.user_is_typing,
+              },
+            });
+            document.dispatchEvent(e);
+          }
+          if (data.hasOwnProperty("location")) {
+            let e = new CustomEvent("user_location", {
+              detail: {
+                user: data.user,
+                location: data.location,
               },
             });
             document.dispatchEvent(e);
@@ -75,5 +88,15 @@ export default class extends Controller {
     } else {
       this.typingUsersTarget.innerHTML = "";
     }
+  }
+
+  updateUserLocation(e) {
+    this.userLocations.set(e.detail.user, e.detail.location);
+    let s = "";
+
+    for (let [user, location] of this.userLocations) {
+      s += `${user} is ${location} meters away.<br>`;
+    }
+    this.locationTarget.innerHTML = s;
   }
 }

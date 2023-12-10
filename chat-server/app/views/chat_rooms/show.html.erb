@@ -16,7 +16,9 @@
     "
   >
     <h1 class="text-3xl font-bold text-center ">Chat Room:
-      <%= @chat_room.name.capitalize %></h1>
+      <%= @chat_room.name.capitalize %>
+    </h1>
+
     <ul class="flex flex-col gap-y-2">
       <li>
         <%= link_to "Back to chat rooms",
@@ -30,6 +32,8 @@
         class: "p-2 rounded-md bg-blue-200 hover:bg-blue-400 " %>
       </li>
     </ul>
+  </div>
+  <div data-chat-target="location" class="">
   </div>
   <div class="flex flex-col flex-1">
     <%= turbo_stream_from "room:#{@chat_room.id}" %>

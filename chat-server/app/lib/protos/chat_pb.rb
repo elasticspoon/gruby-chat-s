@@ -15,10 +15,19 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "rpc.MessageResponse" do
     end
+    add_message "rpc.LocationRequest" do
+      optional :user_id, :int32, 1
+    end
+    add_message "rpc.LocationResponse" do
+      optional :timestamp, :int32, 1
+      optional :distance, :int32, 2
+    end
   end
 end
 
 module Rpc
   ChatMessage = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("rpc.ChatMessage").msgclass
   MessageResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("rpc.MessageResponse").msgclass
+  LocationRequest = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("rpc.LocationRequest").msgclass
+  LocationResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("rpc.LocationResponse").msgclass
 end

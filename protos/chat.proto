@@ -5,6 +5,7 @@ package rpc;
 service Chat {
   rpc SaveMessage (ChatMessage) returns (MessageResponse) {}
   rpc SendMessage (ChatMessage) returns (MessageResponse) {}
+  rpc GetLocation (LocationRequest) returns (stream LocationResponse) {}
 }
 
 // The request message containing the user's name.
@@ -18,3 +19,12 @@ message ChatMessage {
 }
 
 message MessageResponse {}
+
+message LocationRequest {
+  int32 user_id = 1;
+}
+
+message LocationResponse {
+  int32 timestamp = 1;
+  int32 distance = 2;
+}

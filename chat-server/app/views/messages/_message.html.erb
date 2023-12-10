@@ -9,6 +9,10 @@
       bg-blue-300
     "
   >
+    <%= button_to "Show User Location",
+    user_location_path(user_id: message.user_id),
+    method: :post,
+    class: "inline-block bg-blue-300 p-2 hover:bg-blue-500" %>
     <span class="">
       <%= message.user.email %>
     </span>

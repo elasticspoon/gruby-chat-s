@@ -12,6 +12,11 @@ class ChatRoomsController < ApplicationController
   def show
   end
 
+  def user_location
+    user = User.find(params[:user_id])
+    user&.stream_location(params[:id])
+  end
+
   # POST /chat_rooms
   def create
     @chat_room = ChatRoom.new(chat_room_params)
@@ -40,6 +45,6 @@ class ChatRoomsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def chat_room_params
-    params.require(:chat_room).permit(:name)
+    params.require(:chat_room).permit(:name, :user_id)
   end
 end

@@ -1,3 +1,4 @@
 web: rails s -p 3000
 guard: guard -i
 css: rails tailwindcss:watch
+gruf: gruf
