@@ -15,4 +15,15 @@ class Message < ApplicationRecord
       updated_at: updated_at.to_s
     )
   end
+
+  def self.from_proto(proto)
+    Message.new(
+      # message_id: proto.id,
+      user_id: proto.user_id,
+      chat_room_id: proto.chat_room_id,
+      content: proto.chat_message,
+      created_at: proto.created_at,
+      updated_at: proto.updated_at
+    )
+  end
 end

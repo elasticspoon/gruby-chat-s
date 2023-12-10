@@ -3,7 +3,8 @@ syntax = "proto3";
 package rpc;
 
 service Chat {
-  rpc SaveMessage (ChatMessage) returns (ErrorCode) {}
+  rpc SaveMessage (ChatMessage) returns (MessageResponse) {}
+  rpc SendMessage (ChatMessage) returns (MessageResponse) {}
 }
 
 // The request message containing the user's name.
@@ -16,6 +17,4 @@ message ChatMessage {
   string updated_at = 6;
 }
 
-message ErrorCode {
-  int32 code = 1;
-}
+message MessageResponse {}

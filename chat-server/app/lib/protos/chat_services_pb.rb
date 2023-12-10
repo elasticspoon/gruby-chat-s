@@ -14,7 +14,8 @@ module Rpc
       self.unmarshal_class_method = :decode
       self.service_name = 'rpc.Chat'
 
-      rpc :SaveMessage, ::Rpc::ChatMessage, ::Rpc::ErrorCode
+      rpc :SaveMessage, ::Rpc::ChatMessage, ::Rpc::MessageResponse
+      rpc :SendMessage, ::Rpc::ChatMessage, ::Rpc::MessageResponse
     end
 
     Stub = Service.rpc_stub_class

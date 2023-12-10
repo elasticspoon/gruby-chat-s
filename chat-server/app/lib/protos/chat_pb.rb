@@ -13,13 +13,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :created_at, :string, 5
       optional :updated_at, :string, 6
     end
-    add_message "rpc.ErrorCode" do
-      optional :code, :int32, 1
+    add_message "rpc.MessageResponse" do
     end
   end
 end
 
 module Rpc
   ChatMessage = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("rpc.ChatMessage").msgclass
-  ErrorCode = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("rpc.ErrorCode").msgclass
+  MessageResponse = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("rpc.MessageResponse").msgclass
 end
