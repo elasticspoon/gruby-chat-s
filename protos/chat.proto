@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package ="github.com/elasticspoon/gruby-chat-s/protos";
+
 package rpc;
 
 service Chat {
