@@ -1,51 +1,54 @@
-package server
+package main
 
 import (
 	"context"
-	"sync"
+	"flag"
+	"fmt"
+	"log"
+	"net"
 
 	"google.golang.org/grpc"
 
-	pb "github.com/elasticspoon/gruby-chat-s/protos"
+	pb "github.com/elasticspoon/gruby-chat-s/rpc"
 )
 
-type chatClient struct {
-	pb.UnimplementedRouteGuideServer
-	savedFeatures []*pb.Feature // read-only after initialized
+var (
+	tls        = flag.Bool("tls", false, "Connection uses TLS if true, else plain TCP")
+	certFile   = flag.String("cert_file", "", "The TLS cert file")
+	keyFile    = flag.String("key_file", "", "The TLS key file")
+	jsonDBFile = flag.String("json_db_file", "", "A json file containing a list of features")
+	port       = flag.Int("port", 50051, "The server port")
+)
 
-	mu         sync.Mutex // protects routeNotes
-	routeNotes map[string][]*pb.RouteNote
+type chatServer struct {
+	pb.UnimplementedChatServer
 }
 
-func (c *chatClient) SaveMessage(ctx context.Context, in *ChatMessage, opts ...grpc.CallOption) (*MessageResponse, error) {
-	out := new(MessageResponse)
-	err := c.cc.Invoke(ctx, Chat_SaveMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func (c *chatServer) SaveMessage(ctx context.Context, in *pb.ChatMessage) (*pb.MessageResponse, error) {
+	return nil, nil
 }
 
-func (c *chatClient) SendMessage(ctx context.Context, in *ChatMessage, opts ...grpc.CallOption) (*MessageResponse, error) {
-	out := new(MessageResponse)
-	err := c.cc.Invoke(ctx, Chat_SendMessage_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func (c *chatServer) SendMessage(ctx context.Context, in *pb.ChatMessage) (*pb.MessageResponse, error) {
+	return nil, nil
 }
 
-func (c *chatClient) GetLocation(ctx context.Context, in *LocationRequest, opts ...grpc.CallOption) (Chat_GetLocationClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Chat_ServiceDesc.Streams[0], Chat_GetLocation_FullMethodName, opts...)
+func (c *chatServer) GetLocation(in *pb.LocationRequest, ls pb.Chat_GetLocationServer) error {
+	return nil
+}
+
+func newServer() *chatServer {
+	s := &chatServer{}
+	return s
+}
+
+func main() {
+	flag.Parse()
+	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
 	if err != nil {
-		return nil, err
+		log.Fatalf("failed to listen: %v", err)
 	}
-	x := &chatGetLocationClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
+	var opts []grpc.ServerOption
+	grpcServer := grpc.NewServer(opts...)
+	pb.RegisterChatServer(grpcServer, newServer())
+	grpcServer.Serve(lis)
 }

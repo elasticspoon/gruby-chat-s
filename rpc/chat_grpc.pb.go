@@ -4,10 +4,11 @@
 // - protoc             v3.17.3
 // source: chat.proto
 
-package protos
+package rpc
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -102,15 +103,16 @@ type ChatServer interface {
 }
 
 // UnimplementedChatServer must be embedded to have forward compatible implementations.
-type UnimplementedChatServer struct {
-}
+type UnimplementedChatServer struct{}
 
 func (UnimplementedChatServer) SaveMessage(context.Context, *ChatMessage) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveMessage not implemented")
 }
+
 func (UnimplementedChatServer) SendMessage(context.Context, *ChatMessage) (*MessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
 }
+
 func (UnimplementedChatServer) GetLocation(*LocationRequest, Chat_GetLocationServer) error {
 	return status.Errorf(codes.Unimplemented, "method GetLocation not implemented")
 }
