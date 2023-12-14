@@ -9,11 +9,12 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy
 
   def stream_location(room_id)
-    client = Gruf::Client.new(service: ::Rpc::Chat, options: {password: "austin"})
+    client = Gruf::Client.new(service: ::Rpc::Chat, options: {hostname: "127.0.0.1:50051"})
 
     Thread.new do
       rsp = client.call(:GetLocation, user_id: id)
 
+      puts "Received #{rsp.message.inspect}\n"
       rsp.message.each do |msg|
         ActionCable.server.broadcast("chat_room_#{room_id}", {
           user: email,

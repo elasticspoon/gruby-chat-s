@@ -5,7 +5,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"math/rand"
 	"net"
+	"time"
 
 	"google.golang.org/grpc"
 
@@ -33,6 +35,13 @@ func (c *chatServer) SendMessage(ctx context.Context, in *pb.ChatMessage) (*pb.M
 }
 
 func (c *chatServer) GetLocation(in *pb.LocationRequest, ls pb.Chat_GetLocationServer) error {
+	start := rand.Intn(100)
+	for i := start; i >= 0; i-- {
+		if err := ls.Send(&pb.LocationResponse{Timestamp: int32(time.Now().Unix()), Distance: int32(i)}); err != nil {
+			return err
+		}
+		time.Sleep(time.Second)
+	}
 	return nil
 }
 
@@ -50,5 +59,6 @@ func main() {
 	var opts []grpc.ServerOption
 	grpcServer := grpc.NewServer(opts...)
 	pb.RegisterChatServer(grpcServer, newServer())
+	fmt.Printf("Server listening on port %s\n", lis.Addr())
 	grpcServer.Serve(lis)
 }
